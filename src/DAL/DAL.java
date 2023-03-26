@@ -1,26 +1,22 @@
 package DAL;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
-import java.util.Properties;
 
 public class DAL {
+	private Connection con = null;
 	private String CONNECTION_STRING;
 	private String DB_USER;
 	private String DB_PASS;
 
 	public DAL() {
 		try {
-			String confgFilePath = "src/app.config";
-			FileInputStream fis = new FileInputStream(confgFilePath);
-			Properties prop = new Properties();
-			prop.load(fis);
+			ConfigManager cm = new ConfigManager();
 
-			CONNECTION_STRING = prop.getProperty("DB_CON");
-			DB_USER = prop.getProperty("DB_USER");
-			DB_PASS = prop.getProperty("DB_PASS");
+			CONNECTION_STRING = cm.getDBConnectionString();
+			DB_USER = cm.getDBUser();
+			DB_PASS = cm.getDBPass();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -30,7 +26,9 @@ public class DAL {
 
 	public Connection getConnection() throws ClassNotFoundException, SQLException {
 		Class.forName("oracle.jdbc.driver.OracleDriver");
-		Connection con = DriverManager.getConnection(CONNECTION_STRING, DB_USER, DB_PASS);
+
+		if (con == null || con.isClosed())
+			con = DriverManager.getConnection(CONNECTION_STRING, DB_USER, DB_PASS);
 
 		return con;
 	}
@@ -43,7 +41,7 @@ class Demo {
 		try {
 			con = dal.getConnection();
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT CURRENT_DATE FROM DUAL");
+			ResultSet rs = stmt.executeQuery("SELECT 'Hello World!' FROM DUAL");
 
 			if (rs.next()) {
 				System.out.println(rs.getString(1));
