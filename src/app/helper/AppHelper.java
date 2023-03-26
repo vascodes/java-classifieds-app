@@ -2,6 +2,8 @@ package app.helper;
 
 import javax.swing.*;
 
+import app.LoginWindow;
+import app.RegisterWindow;
 import business.UserBL;
 import business.businessObjects.UserBO;
 
@@ -21,7 +23,10 @@ public class AppHelper {
 		}
 	}
 
-	public static void handleLoginButtonClick() {
-		System.out.println("LOGIN CLICKED");
+	public static void handleLoginButtonClick(JFrame registrationFrame) {
+		registrationFrame.dispose();
+
+		LoginWindow login = new LoginWindow();
+		login.setVisibility(true);
 	}
 }

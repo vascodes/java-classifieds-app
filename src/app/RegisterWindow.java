@@ -7,7 +7,7 @@ import app.helper.AppHelper;
 
 import java.awt.event.*;
 
-public class Register {
+public class RegisterWindow {
 
 	private JFrame registrationFrame;
 	private JTextField txtFullName;
@@ -24,7 +24,7 @@ public class Register {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Register window = new Register();
+					RegisterWindow window = new RegisterWindow();
 					window.registrationFrame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -36,7 +36,7 @@ public class Register {
 	/**
 	 * Create the application.
 	 */
-	public Register() {
+	public RegisterWindow() {
 		initialize();
 	}
 
@@ -56,11 +56,13 @@ public class Register {
 		registrationFrame.getContentPane().add(headerPanel);
 		headerPanel.setLayout(null);
 
+		// Heading.
 		JLabel lblRegistrationHeading = new JLabel("REGISTRATION");
 		lblRegistrationHeading.setBounds(0, 0, 231, 44);
 		headerPanel.add(lblRegistrationHeading);
 		lblRegistrationHeading.setFont(new Font("Ubuntu", Font.BOLD, 30));
 
+		// Full Name.
 		JPanel fullNamePanel = new JPanel();
 		fullNamePanel.setBounds(33, 103, 306, 80);
 		registrationFrame.getContentPane().add(fullNamePanel);
@@ -79,6 +81,7 @@ public class Register {
 		txtFullName.setFont(new Font("Ubuntu", Font.PLAIN, 16));
 		txtFullName.setColumns(10);
 
+		// Phone number.
 		JPanel PhonePanel = new JPanel();
 		PhonePanel.setBounds(406, 101, 340, 82);
 		registrationFrame.getContentPane().add(PhonePanel);
@@ -97,6 +100,7 @@ public class Register {
 		txtPhone.setFont(new Font("Ubuntu", Font.PLAIN, 15));
 		txtPhone.setColumns(10);
 
+		// Email.
 		JPanel emailPanel = new JPanel();
 		emailPanel.setBounds(33, 216, 306, 86);
 		registrationFrame.getContentPane().add(emailPanel);
@@ -115,6 +119,7 @@ public class Register {
 		txtEmail.setFont(new Font("Ubuntu", Font.PLAIN, 15));
 		txtEmail.setColumns(10);
 
+		// Address.
 		JPanel addressPanel = new JPanel();
 		addressPanel.setBounds(406, 218, 340, 84);
 		registrationFrame.getContentPane().add(addressPanel);
@@ -131,6 +136,7 @@ public class Register {
 		addressPanel.add(txtAddress);
 		txtAddress.setColumns(10);
 
+		// Username.
 		JPanel UsernamePanel = new JPanel();
 		UsernamePanel.setBounds(33, 339, 306, 84);
 		registrationFrame.getContentPane().add(UsernamePanel);
@@ -149,6 +155,7 @@ public class Register {
 		txtUsername.setFont(new Font("Ubuntu", Font.PLAIN, 15));
 		txtUsername.setColumns(10);
 
+		// Password.
 		JPanel PasswordPanel = new JPanel();
 		PasswordPanel.setLayout(null);
 		PasswordPanel.setBounds(404, 339, 342, 84);
@@ -166,6 +173,7 @@ public class Register {
 		txtPassword.setBounds(0, 46, 342, 38);
 		PasswordPanel.add(txtPassword);
 
+		// Register Button.
 		JButton btnRegister = new JButton("Register");
 		btnRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
@@ -183,15 +191,20 @@ public class Register {
 		btnRegister.setBounds(299, 480, 188, 44);
 		registrationFrame.getContentPane().add(btnRegister);
 
+		// Login Label.
 		JLabel lblLogin = new JLabel("Already have an account? Login");
 		lblLogin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {				
-				AppHelper.handleLoginButtonClick();
+				AppHelper.handleLoginButtonClick(registrationFrame);				
 			}
 		});
 		lblLogin.setFont(new Font("Ubuntu", Font.PLAIN, 16));
 		lblLogin.setBounds(277, 552, 231, 19);
 		registrationFrame.getContentPane().add(lblLogin);
+	}
+	
+	public void setVisibility(boolean isVisible) {						
+		registrationFrame.setVisible(isVisible);		
 	}
 }

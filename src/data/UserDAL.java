@@ -2,8 +2,6 @@ package data;
 
 import java.sql.*;
 
-import javax.swing.JOptionPane;
-
 public class UserDAL {
 	DB db = null;
 
