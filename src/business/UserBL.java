@@ -2,6 +2,7 @@ package business;
 
 import java.sql.*;
 
+import business.businessObjects.UserBO;
 import data.UserDAL;
 
 public class UserBL {

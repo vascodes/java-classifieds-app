@@ -1,4 +1,4 @@
-package business;
+package business.businessObjects;
 
 public class UserBO {
 	private int id;
