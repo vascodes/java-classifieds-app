@@ -47,6 +47,14 @@ public class UserBO {
 		this.address = address;
 	}
 	
+	public void map(int id, String name, String phone, String email, String address) {							
+		this.setId(id);
+		this.setName(name);
+		this.setPhone(phone);
+		this.setEmail(email);
+		this.setAddress(address);
+	}
+	
 	@Override
 	public String toString() {	
 		return String.format("Id: %d, Name: %s, Phone: %s, Email: %s, Address: %s", id, name, phone, email, address);
