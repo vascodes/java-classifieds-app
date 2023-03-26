@@ -9,14 +9,17 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
-import business.LoginBL;
+import app.helper.LoginHelper;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JPanel;
 
 public class LoginWindow {
 
-	private JFrame frame;
+	private JFrame loginFrame;
 	private JTextField txtUsername;
 	private JTextField txtPassword;
 
@@ -28,7 +31,7 @@ public class LoginWindow {
 			public void run() {
 				try {
 					LoginWindow window = new LoginWindow();
-					window.frame.setVisible(true);
+					window.loginFrame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -44,60 +47,82 @@ public class LoginWindow {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the contents of the loginFrame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(0, 0, 500, 500);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		loginFrame = new JFrame();
+		loginFrame.setTitle("LOGIN");
+		loginFrame.setBounds(500, 200, 500, 500);
+		loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		loginFrame.getContentPane().setLayout(null);
+				
+		// Title.
+		JLabel lblLoginTitle = new JLabel("Swing Classifieds");
+		lblLoginTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		lblLoginTitle.setFont(new Font("HelveticaNeueLT Pro 55 Roman", Font.BOLD, 34));
+		lblLoginTitle.setBounds(90, 34, 305, 62);
+		loginFrame.getContentPane().add(lblLoginTitle);
+		
+		JPanel UsernamePanel = new JPanel();
+		UsernamePanel.setBounds(90, 120, 305, 81);
+		loginFrame.getContentPane().add(UsernamePanel);
+		UsernamePanel.setLayout(null);
+		
+		// Username.
+		JLabel lblNewLabel_1 = new JLabel("Username");
+		lblNewLabel_1.setBounds(0, 0, 107, 25);
+		UsernamePanel.add(lblNewLabel_1);
+		lblNewLabel_1.setFont(new Font("HelveticaNeueLT Pro 55 Roman", Font.PLAIN, 20));
 		
 		txtUsername = new JTextField();
+		txtUsername.setBounds(0, 33, 305, 48);
+		UsernamePanel.add(txtUsername);
 		txtUsername.setToolTipText("example: johndoe");
 		txtUsername.setFont(new Font("HelveticaNeueLT Pro 55 Roman", Font.PLAIN, 15));
-		txtUsername.setBounds(90, 155, 305, 48);
-		frame.getContentPane().add(txtUsername);
 		txtUsername.setColumns(10);
 		
-		JLabel lblNewLabel = new JLabel("Swing Classifieds");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("HelveticaNeueLT Pro 55 Roman", Font.BOLD, 34));
-		lblNewLabel.setBounds(90, 48, 305, 62);
-		frame.getContentPane().add(lblNewLabel);
+		JPanel passwordPanel = new JPanel();
+		passwordPanel.setBounds(90, 227, 305, 82);
+		loginFrame.getContentPane().add(passwordPanel);
+		passwordPanel.setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel("Username");
-		lblNewLabel_1.setFont(new Font("HelveticaNeueLT Pro 55 Roman", Font.PLAIN, 20));
-		lblNewLabel_1.setBounds(90, 127, 107, 25);
-		frame.getContentPane().add(lblNewLabel_1);
-		
+		// Password.
 		txtPassword = new JTextField();
+		txtPassword.setBounds(0, 34, 305, 48);
+		passwordPanel.add(txtPassword);
 		txtPassword.setToolTipText("your password.");
 		txtPassword.setFont(new Font("HelveticaNeueLT Pro 55 Roman", Font.PLAIN, 15));
 		txtPassword.setColumns(10);
-		txtPassword.setBounds(90, 262, 305, 48);
-		frame.getContentPane().add(txtPassword);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Password");
+		lblNewLabel_1_1.setBounds(0, 0, 107, 25);
+		passwordPanel.add(lblNewLabel_1_1);
 		lblNewLabel_1_1.setFont(new Font("HelveticaNeueLT Pro 55 Roman", Font.PLAIN, 20));
-		lblNewLabel_1_1.setBounds(90, 233, 107, 25);
-		frame.getContentPane().add(lblNewLabel_1_1);
 		
-		JButton btnNewButton = new JButton("LOGIN");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String userNameText = txtUsername.getText();
-				String passwordText = txtPassword.getText();
-				
-				LoginBL loginBL = new LoginBL(userNameText, passwordText);
-//				boolean isAuth = loginBL.authenticate();
+		// LOGIN BUTTON.
+		JButton btnLogin = new JButton("LOGIN");
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {			
+				LoginHelper.handleLoginButtonClick(txtUsername, txtPassword);
 			}
 		});
-		btnNewButton.setFont(new Font("HelveticaNeueLT Pro 55 Roman", Font.PLAIN, 20));
-		btnNewButton.setBounds(90, 340, 305, 48);
-		frame.getContentPane().add(btnNewButton);
+		btnLogin.setFont(new Font("HelveticaNeueLT Pro 55 Roman", Font.PLAIN, 20));
+		btnLogin.setBounds(90, 339, 305, 48);
+		loginFrame.getContentPane().add(btnLogin);
+		
+		JLabel lblRegister = new JLabel("Don't have an account? Register here.");
+		lblRegister.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				LoginHelper.handleRegisterButtonClick(loginFrame);
+			}
+		});
+		lblRegister.setFont(new Font("Ubuntu", Font.PLAIN, 14));
+		lblRegister.setBounds(120, 412, 245, 25);
+		loginFrame.getContentPane().add(lblRegister);
 	}
 	
 	public void setVisibility(boolean isVisible) {
-		frame.setVisible(isVisible);
+		loginFrame.setVisible(isVisible);
 	}
 }

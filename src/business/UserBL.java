@@ -12,9 +12,10 @@ public class UserBL {
 
 		try {
 			ResultSet rs = userDAL.getUserById(id);
-
-			user = new UserBO(rs.getInt("id"), rs.getString("name"), rs.getString("phone"), rs.getString("email"),
-					rs.getString("address"));
+			if (rs.next()) {
+				user = new UserBO(rs.getInt("id"), rs.getString("name"), rs.getString("phone"), rs.getString("email"),
+						rs.getString("address"));
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();

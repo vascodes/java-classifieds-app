@@ -17,8 +17,7 @@ public class UserDAL {
 			String sql = "SELECT * FROM tbl_user WHERE id = ?";
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setInt(1, id);
-			rs = stmt.executeQuery();
-			rs.next();
+			rs = stmt.executeQuery();			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -32,7 +31,9 @@ public class UserDAL {
 		PreparedStatement ps = null;
 		int lastInsertedUserId = 0;
 		boolean isAdded = false;
-
+				
+		// TODO: Check if user already exists.
+		
 		// Insert into user table.
 		sql = "INSERT INTO tbl_user (name, phone, email, address) VALUES (?, ?, ?, ?)";
 		try {

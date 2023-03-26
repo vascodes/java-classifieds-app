@@ -33,4 +33,9 @@ public class LoginBO {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public LoginBO(String username, String password) {
+		setUsername(username);
+		setPassword(password);
+	}
 }

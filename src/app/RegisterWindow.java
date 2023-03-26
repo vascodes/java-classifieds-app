@@ -3,7 +3,7 @@ package app;
 import java.awt.*;
 import javax.swing.*;
 
-import app.helper.AppHelper;
+import app.helper.RegisterHelper;
 
 import java.awt.event.*;
 
@@ -16,7 +16,7 @@ public class RegisterWindow {
 	private JTextField txtEmail;
 	private JTextField txtAddress;
 	private JTextField txtPassword;
-		
+
 	/**
 	 * Launch the application.
 	 */
@@ -46,7 +46,7 @@ public class RegisterWindow {
 	private void initialize() {
 		registrationFrame = new JFrame();
 		registrationFrame.setResizable(false);
-		registrationFrame.setTitle("Swing Classifieds");
+		registrationFrame.setTitle("REGISTRATION");
 		registrationFrame.setBounds(400, 100, 800, 658);
 		registrationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		registrationFrame.getContentPane().setLayout(null);
@@ -176,15 +176,11 @@ public class RegisterWindow {
 		// Register Button.
 		JButton btnRegister = new JButton("Register");
 		btnRegister.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {				
-				String fullNameText = txtFullName.getText();				
-				String phoneText = txtPhone.getText();
-				String emailText = txtEmail.getText();
-				String addressText = txtAddress.getText();
-				String usernameText = txtUsername.getText();
-				String passwordText = txtPassword.getText(); 
-								
-				AppHelper.handleRegisterButtonClick(fullNameText, phoneText, emailText, addressText, usernameText, passwordText);
+			public void actionPerformed(ActionEvent e) {
+				JTextField[] JtxtFields = { txtFullName, txtPhone, txtPassword, txtEmail, txtAddress, txtUsername,
+						txtPassword };
+				
+				RegisterHelper.handleRegisterButtonClick(JtxtFields);
 			}
 		});
 		btnRegister.setFont(new Font("Ubuntu", Font.PLAIN, 20));
@@ -195,16 +191,16 @@ public class RegisterWindow {
 		JLabel lblLogin = new JLabel("Already have an account? Login");
 		lblLogin.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {				
-				AppHelper.handleLoginButtonClick(registrationFrame);				
+			public void mouseClicked(MouseEvent e) {
+				RegisterHelper.handleLoginButtonClick(registrationFrame);
 			}
 		});
 		lblLogin.setFont(new Font("Ubuntu", Font.PLAIN, 16));
 		lblLogin.setBounds(277, 552, 231, 19);
 		registrationFrame.getContentPane().add(lblLogin);
 	}
-	
-	public void setVisibility(boolean isVisible) {						
-		registrationFrame.setVisible(isVisible);		
+
+	public void setVisibility(boolean isVisible) {
+		registrationFrame.setVisible(isVisible);
 	}
 }

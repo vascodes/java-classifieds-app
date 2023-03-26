@@ -1,20 +1,22 @@
 package business;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import business.businessObjects.LoginBO;
-import data.AuthDAL;
+import data.LoginDAL;
 
 public class LoginBL {
-	private LoginBO loginBO = null;
+	public boolean checkLogin(LoginBO loginBO) throws SQLException {
+		LoginDAL loginDAL = new LoginDAL();
+		boolean isUserExists = false;
 
-	public LoginBL(String username, String password) {
-		loginBO = new LoginBO();
-		
-		loginBO.setUsername(username);
-		loginBO.setPassword(password);		
-	}
+		ResultSet rs = loginDAL.getLoginUserDetails(loginBO.getUsername(), loginBO.getPassword());
 
-	public void authenticate() {
-		AuthDAL auth = new AuthDAL();
-		auth.checkLogin(loginBO);
+		if (rs.next()) {
+			isUserExists = true;
+		}
+
+		return isUserExists;
 	}
 }
