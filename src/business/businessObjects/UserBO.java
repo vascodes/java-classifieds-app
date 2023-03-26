@@ -10,11 +10,11 @@ public class UserBO {
 	public int getId() {
 		return id;
 	}
-	
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -34,7 +34,7 @@ public class UserBO {
 	public String getEmail() {
 		return email;
 	}
-	
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -46,17 +46,35 @@ public class UserBO {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
-	public void map(int id, String name, String phone, String email, String address) {							
+
+	public void mapUserWithId(int id, String name, String phone, String email, String address) {
 		this.setId(id);
 		this.setName(name);
 		this.setPhone(phone);
 		this.setEmail(email);
 		this.setAddress(address);
 	}
-	
+
+	public void mapUserWithoutId(String name, String phone, String email, String address) {
+		this.setName(name);
+		this.setPhone(phone);
+		this.setEmail(email);
+		this.setAddress(address);
+	}
+
+	public UserBO() {
+	};
+
+	public UserBO(String name, String phone, String email, String address) {
+		mapUserWithoutId(name, phone, email, address);
+	}
+
+	public UserBO(int id, String name, String phone, String email, String address) {
+		mapUserWithId(id, name, phone, email, address);
+	}
+
 	@Override
-	public String toString() {	
+	public String toString() {
 		return String.format("Id: %d, Name: %s, Phone: %s, Email: %s, Address: %s", id, name, phone, email, address);
 	}
 }
