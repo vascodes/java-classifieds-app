@@ -55,6 +55,8 @@ public class LoginWindow {
 		loginFrame.setBounds(500, 200, 500, 500);
 		loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		loginFrame.getContentPane().setLayout(null);
+		
+		LoginHelper lh = new LoginHelper(loginFrame);
 				
 		// Title.
 		JLabel lblLoginTitle = new JLabel("Swing Classifieds");
@@ -103,7 +105,7 @@ public class LoginWindow {
 		JButton btnLogin = new JButton("LOGIN");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {			
-				LoginHelper.handleLoginButtonClick(txtUsername, txtPassword);
+				lh.handleLoginButtonClick(txtUsername, txtPassword);
 			}
 		});
 		btnLogin.setFont(new Font("HelveticaNeueLT Pro 55 Roman", Font.PLAIN, 20));
@@ -114,7 +116,7 @@ public class LoginWindow {
 		lblRegister.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				LoginHelper.handleRegisterButtonClick(loginFrame);
+				lh.handleRegisterButtonClick(loginFrame);
 			}
 		});
 		lblRegister.setFont(new Font("Ubuntu", Font.PLAIN, 14));

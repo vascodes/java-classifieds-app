@@ -16,7 +16,23 @@ public class UserBL {
 				user = new UserBO(rs.getInt("id"), rs.getString("name"), rs.getString("phone"), rs.getString("email"),
 						rs.getString("address"));
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
+		return user;
+	}
+
+	public UserBO getUserByUsername(String username) {
+		UserDAL userDAL = new UserDAL();
+		UserBO user = null;
+		ResultSet rs = userDAL.getUserByUsername(username);
+
+		try {
+			if (rs.next()) {
+				user = new UserBO(rs.getInt("id"), rs.getString("name"), rs.getString("phone"), rs.getString("email"),
+						rs.getString("address"));
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

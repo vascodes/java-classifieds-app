@@ -24,6 +24,23 @@ public class UserDAL {
 
 		return rs;
 	}
+	
+	public ResultSet getUserByUsername(String username) {
+		ResultSet rs = null;
+
+		Connection con = db.getConnection();
+		try {
+			String sql = "SELECT tu.* FROM tbl_user tu join tbl_login tl on tu.id = tl.user_id WHERE tl.username = ?";			
+			PreparedStatement stmt = con.prepareStatement(sql);			
+			stmt.setString(1, username);
+			rs = stmt.executeQuery();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return rs;
+	}
 
 	public boolean addUser(String name, String phone, String email, String address, String username, String password) {
 		Connection con = db.getConnection();

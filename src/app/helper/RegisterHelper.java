@@ -7,7 +7,17 @@ import business.UserBL;
 import business.businessObjects.UserBO;
 
 public class RegisterHelper {
-	public static void handleRegisterButtonClick(JTextField[] JtxtFields) {
+	private JFrame registerWindow;
+
+	public RegisterHelper(JFrame registerWindow) {
+		this.registerWindow = registerWindow;
+	}
+
+	public void handleRegisterButtonClick(JTextField txtFullName, JTextField txtPhone, JTextField txtEmail,
+			JTextField txtAddress, JTextField txtUsername, JTextField txtPassword) {
+
+		JTextField[] JtxtFields = { txtFullName, txtPhone, txtPassword, txtEmail, txtAddress, txtUsername,
+				txtPassword };
 
 		// Check if all inputs are provided.
 		for (JTextField txtField : JtxtFields) {
@@ -19,11 +29,10 @@ public class RegisterHelper {
 
 		// Create user object.
 		UserBL userBL = new UserBL();
-		UserBO user = new UserBO(JtxtFields[0].getText().trim(), JtxtFields[1].getText().trim(),
-				JtxtFields[2].getText().trim(), JtxtFields[3].getText().trim());
+		UserBO user = new UserBO(txtFullName.getText(), txtPhone.getText(), txtEmail.getText(), txtAddress.getText());
 
 		boolean isUserAdded = false;
-		isUserAdded = userBL.addUser(user, JtxtFields[4].getText().trim(), JtxtFields[5].getText().trim());
+		isUserAdded = userBL.addUser(user, txtUsername.getText().trim(), txtPassword.getText().trim());
 		if (isUserAdded) {
 			JOptionPane.showMessageDialog(null, "Registration Successful.");
 
@@ -36,14 +45,14 @@ public class RegisterHelper {
 		}
 	}
 
-	public static void handleLoginButtonClick(JFrame registrationFrame) {
-		registrationFrame.dispose();
+	public void handleLoginButtonClick() {
+		registerWindow.dispose();
 
 		LoginWindow login = new LoginWindow();
 		login.setVisibility(true);
 	}
 
-	public static void handleRegisterButtonClick() {
+	public void handleRegisterButtonClick() {
 		// TODO Auto-generated method stub
 
 	}

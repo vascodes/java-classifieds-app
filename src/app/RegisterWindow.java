@@ -51,6 +51,8 @@ public class RegisterWindow {
 		registrationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		registrationFrame.getContentPane().setLayout(null);
 
+		RegisterHelper rh = new RegisterHelper(registrationFrame);
+
 		JPanel headerPanel = new JPanel();
 		headerPanel.setBounds(299, 29, 231, 44);
 		registrationFrame.getContentPane().add(headerPanel);
@@ -177,10 +179,8 @@ public class RegisterWindow {
 		JButton btnRegister = new JButton("Register");
 		btnRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JTextField[] JtxtFields = { txtFullName, txtPhone, txtPassword, txtEmail, txtAddress, txtUsername,
-						txtPassword };
-				
-				RegisterHelper.handleRegisterButtonClick(JtxtFields);
+				rh.handleRegisterButtonClick(txtFullName, txtPhone, txtEmail, txtAddress, txtUsername,
+						txtPassword);
 			}
 		});
 		btnRegister.setFont(new Font("Ubuntu", Font.PLAIN, 20));
@@ -192,7 +192,7 @@ public class RegisterWindow {
 		lblLogin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				RegisterHelper.handleLoginButtonClick(registrationFrame);
+				rh.handleLoginButtonClick();
 			}
 		});
 		lblLogin.setFont(new Font("Ubuntu", Font.PLAIN, 16));
