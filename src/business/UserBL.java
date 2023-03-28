@@ -6,6 +6,20 @@ import business.businessObjects.UserBO;
 import data.UserDAL;
 
 public class UserBL {
+	public boolean addUser(UserBO user) throws SQLIntegrityConstraintViolationException {
+		boolean isUserAdded = false;
+
+		UserDAL userDAL = new UserDAL();
+		try {
+			isUserAdded = userDAL.addUser(user.getName(), user.getPhone(), user.getEmail(), user.getAddress(),
+					user.getUsername(), user.getPassword());
+		} catch (SQLIntegrityConstraintViolationException e) {
+			throw new SQLIntegrityConstraintViolationException("Sorry, account with username " + user.getUsername() + " already exists.");
+		}
+
+		return isUserAdded;
+	}
+
 	public UserBO getUserById(int id) {
 		UserDAL userDAL = new UserDAL();
 		UserBO user = null;
@@ -38,15 +52,5 @@ public class UserBL {
 		}
 
 		return user;
-	}
-
-	public boolean addUser(UserBO user, String username, String password) {
-		boolean isUserAdded = false;
-		UserDAL userDAL = new UserDAL();
-
-		isUserAdded = userDAL.addUser(user.getName(), user.getPhone(), user.getEmail(), user.getAddress(), username,
-				password);
-
-		return isUserAdded;
 	}
 }

@@ -1,5 +1,7 @@
 package app.helper;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+
 import javax.swing.*;
 
 import app.LoginWindow;
@@ -16,40 +18,49 @@ public class RegisterHelper {
 	public void handleRegisterButtonClick(JTextField txtFullName, JTextField txtPhone, JTextField txtEmail,
 			JTextField txtAddress, JTextField txtUsername, JTextField txtPassword) {
 
-		JTextField[] JtxtFields = { txtFullName, txtPhone, txtPassword, txtEmail, txtAddress, txtUsername,
-				txtPassword };
+		String fullName = txtFullName.getText().trim(), phone = txtPhone.getText().trim(),
+				email = txtEmail.getText().trim(), address = txtAddress.getText().trim(),
+				username = txtUsername.getText().trim(), password = txtPassword.getText().trim();
 
-		// Check if all inputs are provided.
-		for (JTextField txtField : JtxtFields) {
-			if (txtField.getText().equals("")) {
-				JOptionPane.showMessageDialog(null, "Please provide all inputs.");
+		// Check whether all text inputs are provided.
+		String allInputs[] = { fullName, phone, email, address, username, password };
+		for (String inputStr : allInputs) {
+			if (inputStr.equals("")) {
+				CommonHelper.showAlert("Please provide all inputs.");
 				return;
 			}
 		}
 
-		// Create user object.
+		UserBO newUser = new UserBO(fullName, phone, email, address, username, password);
 		UserBL userBL = new UserBL();
-		UserBO user = new UserBO(txtFullName.getText(), txtPhone.getText(), txtEmail.getText(), txtAddress.getText());
 
 		boolean isUserAdded = false;
-		isUserAdded = userBL.addUser(user, txtUsername.getText().trim(), txtPassword.getText().trim());
+		try {
+			isUserAdded = userBL.addUser(newUser);
+		} catch (SQLIntegrityConstraintViolationException e) {
+			CommonHelper.showAlert(e.getMessage());
+		}
+		
 		if (isUserAdded) {
-			JOptionPane.showMessageDialog(null, "Registration Successful.");
+			CommonHelper.showAlert("Registration Successful.");
 
-			// Reset text fields.
-			for (JTextField txtField : JtxtFields) {
-				txtField.setText("");
-			}
+			// Reset all input text fields.
+			txtFullName.setText("");
+			txtPhone.setText("");
+			txtEmail.setText("");
+			txtAddress.setText("");
+			txtUsername.setText("");
+			txtPassword.setText("");
 		} else {
-			JOptionPane.showMessageDialog(null, "Registration failed.");
+			CommonHelper.showAlert("Registration failed.");
 		}
 	}
 
 	public void handleLoginButtonClick() {
-		registerWindow.dispose();
-
 		LoginWindow login = new LoginWindow();
 		login.setVisibility(true);
+
+		registerWindow.dispose();
 	}
 
 	public void handleRegisterButtonClick() {
