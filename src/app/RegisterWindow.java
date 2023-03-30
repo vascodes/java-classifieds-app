@@ -49,10 +49,10 @@ public class RegisterWindow {
 		registrationFrame.setTitle("REGISTRATION");
 		registrationFrame.setBounds(400, 100, 800, 658);
 		registrationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		registrationFrame.getContentPane().setLayout(null);
+		registrationFrame.getContentPane().setLayout(null);		
 
-		RegisterHelper rh = new RegisterHelper(registrationFrame);
-
+		RegisterHelper rh = new RegisterHelper();
+		
 		JPanel headerPanel = new JPanel();
 		headerPanel.setBounds(299, 29, 231, 44);
 		registrationFrame.getContentPane().add(headerPanel);
@@ -179,8 +179,22 @@ public class RegisterWindow {
 		JButton btnRegister = new JButton("Register");
 		btnRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				rh.handleRegisterButtonClick(txtFullName, txtPhone, txtEmail, txtAddress, txtUsername,
-						txtPassword);
+				String fullName = txtFullName.getText().trim();
+				String phone = txtPhone.getText().trim();
+				String email = txtEmail.getText().trim();
+				String address = txtAddress.getText().trim();
+				String username = txtUsername.getText().trim();
+				String password = txtPassword.getText().trim();
+
+				rh.handleRegisterButtonClick(fullName, phone, email, address, username, password);
+
+				// Reset all input text fields.
+				txtFullName.setText("");
+				txtPhone.setText("");
+				txtEmail.setText("");
+				txtAddress.setText("");
+				txtUsername.setText("");
+				txtPassword.setText("");
 			}
 		});
 		btnRegister.setFont(new Font("Ubuntu", Font.PLAIN, 20));
@@ -193,6 +207,8 @@ public class RegisterWindow {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				rh.handleLoginButtonClick();
+
+				registrationFrame.dispose();
 			}
 		});
 		lblLogin.setFont(new Font("Ubuntu", Font.PLAIN, 16));

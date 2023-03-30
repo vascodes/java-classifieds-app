@@ -62,11 +62,27 @@ public class UserDAL {
 
 		Connection con = db.getConnection();
 		try {
-			String sql = "SELECT tu.* FROM tbl_user tu join tbl_login tl on tu.id = tl.user_id WHERE tl.username = ?";			
-			PreparedStatement stmt = con.prepareStatement(sql);			
+			String sql = "SELECT * FROM tbl_user WHERE username = ?";			
+			PreparedStatement stmt = con.prepareStatement(sql);				
 			stmt.setString(1, username);
-			rs = stmt.executeQuery();
-			
+			rs = stmt.executeQuery();			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return rs;
+	}
+	
+	public ResultSet getUserByUsernameAndPassword(String username, String password) {
+		ResultSet rs = null;
+
+		Connection con = db.getConnection();
+		try {
+			String sql = "SELECT * FROM tbl_user WHERE username = ? AND password = ?";			
+			PreparedStatement stmt = con.prepareStatement(sql);				
+			stmt.setString(1, username);
+			stmt.setString(2, password);
+			rs = stmt.executeQuery();			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

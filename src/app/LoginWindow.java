@@ -56,7 +56,7 @@ public class LoginWindow {
 		loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		loginFrame.getContentPane().setLayout(null);
 		
-		LoginHelper lh = new LoginHelper(loginFrame);
+		LoginHelper lh = new LoginHelper();
 				
 		// Title.
 		JLabel lblLoginTitle = new JLabel("Swing Classifieds");
@@ -105,18 +105,27 @@ public class LoginWindow {
 		JButton btnLogin = new JButton("LOGIN");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {			
-				lh.handleLoginButtonClick(txtUsername, txtPassword);
+				String username = txtUsername.getText().trim();
+				String password = txtPassword.getText().trim();
+				
+				lh.handleLoginButtonClick(username, password);
+				
+				// Reset text fields.
+				txtUsername.setText("");
+				txtPassword.setText("");								
 			}
 		});
 		btnLogin.setFont(new Font("HelveticaNeueLT Pro 55 Roman", Font.PLAIN, 20));
 		btnLogin.setBounds(90, 339, 305, 48);
 		loginFrame.getContentPane().add(btnLogin);
 		
+		// REGISTER BUTTON.
 		JLabel lblRegister = new JLabel("Don't have an account? Register here.");
 		lblRegister.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				lh.handleRegisterButtonClick(loginFrame);
+				loginFrame.dispose();
+				lh.handleRegisterButtonClick();
 			}
 		});
 		lblRegister.setFont(new Font("Ubuntu", Font.PLAIN, 14));

@@ -73,6 +73,16 @@ public class UserBO {
 		this.setUsername(username);
 		this.setPassword(password);
 	}
+	
+	public UserBO(int id, String name, String phone, String email, String address, String username, String password) {
+		this.setId(id);
+		this.setName(name);
+		this.setPhone(phone);
+		this.setEmail(email);
+		this.setAddress(address);
+		this.setUsername(username);
+		this.setPassword(password);
+	}
 
 	@Override
 	public String toString() {

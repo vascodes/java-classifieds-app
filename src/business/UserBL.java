@@ -14,41 +14,47 @@ public class UserBL {
 			isUserAdded = userDAL.addUser(user.getName(), user.getPhone(), user.getEmail(), user.getAddress(),
 					user.getUsername(), user.getPassword());
 		} catch (SQLIntegrityConstraintViolationException e) {
-			throw new SQLIntegrityConstraintViolationException("Sorry, account with username " + user.getUsername() + " already exists.");
+			throw new SQLIntegrityConstraintViolationException(
+					"Sorry, account with username " + user.getUsername() + " already exists.");
 		}
 
 		return isUserAdded;
 	}
 
-	public UserBO getUserById(int id) {
-		UserDAL userDAL = new UserDAL();
+	public UserBO getUserById(int id) throws SQLException {
 		UserBO user = null;
 
-		try {
-			ResultSet rs = userDAL.getUserById(id);
-			if (rs.next()) {
-				user = new UserBO(rs.getInt("id"), rs.getString("name"), rs.getString("phone"), rs.getString("email"),
-						rs.getString("address"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		UserDAL userDAL = new UserDAL();
+		ResultSet rs = userDAL.getUserById(id);
+		if (rs.next()) {
+			user = new UserBO(rs.getInt("id"), rs.getString("name"), rs.getString("phone"), rs.getString("email"),
+					rs.getString("address"), rs.getString("username"), rs.getString("password"));
 		}
 
 		return user;
 	}
 
-	public UserBO getUserByUsername(String username) {
+	public UserBO getUserByUsername(String username) throws SQLException {
 		UserDAL userDAL = new UserDAL();
 		UserBO user = null;
 		ResultSet rs = userDAL.getUserByUsername(username);
 
-		try {
-			if (rs.next()) {
-				user = new UserBO(rs.getInt("id"), rs.getString("name"), rs.getString("phone"), rs.getString("email"),
-						rs.getString("address"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		if (rs.next()) {
+			user = new UserBO(rs.getInt("id"), rs.getString("name"), rs.getString("phone"), rs.getString("email"),
+					rs.getString("address"), rs.getString("username"), rs.getString("password"));
+		}
+
+		return user;
+	}
+	
+	public UserBO getUserByUsernameAndPassword(String username, String password) throws SQLException {
+		UserDAL userDAL = new UserDAL();
+		UserBO user = null;
+		ResultSet rs = userDAL.getUserByUsernameAndPassword(username, password);
+
+		if (rs.next()) {
+			user = new UserBO(rs.getInt("id"), rs.getString("name"), rs.getString("phone"), rs.getString("email"),
+					rs.getString("address"), rs.getString("username"), rs.getString("password"));
 		}
 
 		return user;
